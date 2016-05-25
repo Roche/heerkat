@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
  *******************************************************************************
  * Copyright © 2016 Hoffmann-La Roche
@@ -16,31 +17,29 @@
  ******************************************************************************
 """
 
-
 import time
 import os
 
-
 # TODO: Old python strikes again! No enums for us in Python 2.6.6 ...
-QUICKSTART= 'quickstart'
+QUICKSTART = 'quickstart'
 
 
 def get_environment():
-  env_name = os.environ['EXECUTION_ENV']
-  if env_name not in [QUICKSTART]:
-    raise ValueError('Given environment (%s) is not supported.' % env_name)
-  return env_name
+    env_name = os.environ['EXECUTION_ENV']
+    if env_name not in [QUICKSTART]:
+        raise ValueError('Given environment (%s) is not supported.' % env_name)
+    return env_name
 
 
 def environment_dependent(quickstart):
-  env = get_environment()
-  if env == QUICKSTART:
-    return quickstart
+    env = get_environment()
+    if env == QUICKSTART:
+        return quickstart
 
 
 # TODO: avoid hardcoding CDH version. For Cloudera QuickStart there is one path. For all parcel based installations, we need to think how to address this issue.
 mr_examples_jar = environment_dependent(
-  quickstart='/usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar',
+    quickstart='/usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar',
 )
 
 # return codes
