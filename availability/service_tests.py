@@ -26,12 +26,12 @@ from utils.timeout import *
 
 class ServiceTest(unittest.TestCase):
 
-  @timeout(180)
-  @report('mapreduce', 'PiEstimator')
-  def test_mr_application_execution(self):
-    # when
-    result = cmd('hadoop jar %s pi 5 5' % mr_examples_jar)
+    @timeout(180)
+    @report('mapreduce', 'PiEstimator')
+    def test_mr_application_execution(self):
+        # when
+        result = cmd('hadoop jar %s pi 5 5' % mr_examples_jar)
 
-    # than
-    self.assertEqual(0, result.exit_code, result.stderr)
+        # than
+        self.assertEqual(0, result.exit_code, result.stderr)
 

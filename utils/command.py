@@ -16,7 +16,6 @@
  ******************************************************************************
 """
 
-
 import shlex
 import time
 
@@ -24,36 +23,37 @@ from subprocess import Popen, PIPE
 
 
 class Result:
-  pass
+    pass
 
 
 def cmd(command):
-  result = Result()
+    result = Result()
 
-  p = Popen(shlex.split(command), stdin=PIPE, stdout=PIPE, stderr=PIPE)
-  (stdout, stderr) = p.communicate()
+    p = Popen(shlex.split(command), stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    (stdout, stderr) = p.communicate()
 
-  result.exit_code = p.returncode
-  result.stdout = stdout
-  result.stderr = stderr
-  result.command = command
+    result.exit_code = p.returncode
+    result.stdout = stdout
+    result.stderr = stderr
+    result.command = command
 
-  if p.returncode != 0:
-    print 'Error executing command [%s]' % command
-    print 'stderr: [%s]' % stderr
-    print 'stdout: [%s]' % stdout
+    if p.returncode != 0:
+        print 'Error executing command [%s]' % command
+        print 'stderr: [%s]' % stderr
+        print 'stdout: [%s]' % stdout
 
-  return result
+    return result
+
 
 def cmd_test(command, num_retries, back_off, exit_pattern_stdout):
-  count = 0
+    count = 0
 
-  while count < num_retries:
-    result = cmd(command)
-    check = exit_pattern_stdout in result.stdout
-    if check == True:
-      break
-    count += 1
-    time.sleep(back_off)
+    while count < num_retries:
+        result = cmd(command)
+        check = exit_pattern_stdout in result.stdout
+        if check == True:
+            break
+        count += 1
+        time.sleep(back_off)
 
-  return [check,result.stdout]
+    return [check, result.stdout]

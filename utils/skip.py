@@ -16,19 +16,18 @@
  ******************************************************************************
 """
 
-
 from utils.properties import *
 
 
 def skip(for_env=None, message=''):
-  def decorate(function):
-    env = get_environment()
-    if for_env is None or for_env == env:
-      print "Skipping test (%s) with message: %s." % (function.func_name, message)
-      return empty
-    return function
+    def decorate(function):
+        env = get_environment()
+        if for_env is None or for_env == env:
+            print "Skipping test (%s) with message: %s." % (function.func_name, message)
+            return empty
+        return function
 
-  def empty(*args, **kwargs):
-    pass
+    def empty(*args, **kwargs):
+        pass
 
-  return decorate
+    return decorate
