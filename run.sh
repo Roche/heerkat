@@ -20,7 +20,7 @@ export PYTHONUNBUFFERED=1
 
 NOW=$(date +%Y-%m-%d:%H:%M:%S)
 DETAILED_LOG="log/output_${NOW}.log"
-MONITORED_LOG="logs/execution.log"
+MONITORED_LOG="log/execution.log"
 USER=${TEST_USER:-cloudera}
 
 python run_test_suite.py --detailed_output ${DETAILED_LOG} --monitored_output ${MONITORED_LOG} --test_suite $1 > ${DETAILED_LOG} 2>&1
