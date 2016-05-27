@@ -36,10 +36,11 @@ class ServiceTest(unittest.TestCase):
         # than
         self.assertEqual(0, result.exit_code, result.stderr)
 
-
+    @timeout(60)
+    @report('hdfs', 'write-read-rm')
     def test_hdfs_write_and_read(self):
         #given
-        cmd('hdfs dfs -mkdir -p' + destination_path)
+        cmd('hdfs dfs -mkdir -p ' + destination_path)
         destination_file = destination_path + 'hdfs_test_data'
 
         #when
