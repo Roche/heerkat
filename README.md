@@ -22,4 +22,3 @@ This code should work with the Cloudera QuickStart installation without any modi
 This test will run:
  - a simple Pi estimator MR job from Hadoop examples, using 5 mappers and 5 reducers.
  - test hdfs file operations (copy to hdfs, read from hdfs)
- 
