@@ -46,3 +46,6 @@ mr_examples_jar = environment_dependent(
 assertion_success_code = 0
 assertion_failure_code = 1
 timeout_expired_code = 2
+
+sample_data = 'resources/sample_data'
+destination_path = '/tmp/cluster_monitoring/%s' % time.time()

@@ -13,10 +13,13 @@ Requirements:
 
 Availability monitoring is performed with custom scripts written in Python. Python code periodically (needs to be setup in Cron or other scheduler) executes the checks for chosen Hadoop components and logs predefined 'failure line' to a file. This file can be monitored by the end-users or with a preferred monitoring system, e.g. NetIQ App Manager.
  
-### Test Map/Reduce jobs 
+### Running tests
 
 This code should work with the Cloudera QuickStart installation without any modifications. To run the test simply execute:
 
     ./run.sh availability.service_tests
 
-This test will run a simple Pi estimator MR job from Hadoop examples, using 5 mappers and 5 reducers.
+This test will run:
+ - a simple Pi estimator MR job from Hadoop examples, using 5 mappers and 5 reducers.
+ - test hdfs file operations (copy to hdfs, read from hdfs)
+ 

@@ -36,3 +36,18 @@ class ServiceTest(unittest.TestCase):
         # than
         self.assertEqual(0, result.exit_code, result.stderr)
 
+
+    def test_hdfs_write_and_read(self):
+        #given
+        cmd('hdfs dfs -mkdir -p' + destination_path)
+        destination_file = destination_path + 'hdfs_test_data'
+
+        #when
+        write_result = cmd('hdfs dfs -put %s %s' % (sample_data, destination_file))
+        read_result = cmd('hdfs dfs -cat ' + destination_file)
+        rm_result = cmd('hdfs dfs -rm ' + destination_file)
+
+        #than
+        self.assertEqual(0, write_result.exit_code, write_result.stderr)
+        self.assertEqual(0, read_result.exit_code, read_result.stderr)
+        self.assertEqual(0, rm_result.exit_code, rm_result.stderr)
