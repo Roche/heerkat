@@ -6,7 +6,7 @@ Heerkat is available under the [Apache License 2.0](http://www.apache.org/licens
 
 Requirements: 	
 
-- create 'log' directory for storing logs in the root folder (the output paths for the tests can be set in `run.sh` - variables `DETAILED_LOG` and `MONITORED_LOG`)
+- create a 'log' directory in the root folder to store the log files (the output paths for the tests can be set in `run.sh` - variables `DETAILED_LOG` and `MONITORED_LOG`)
 - set an environment variable to indicate that the Cloudera QuickStart installation is used: `export EXECUTION_ENV=quickstart`
 
 ## Availability monitoring 
