@@ -25,3 +25,4 @@ This test will run:
  - test spark application execution
  - test pig application execution
  - test oozie workflow
+ - test
