@@ -19,6 +19,7 @@
 
 import time
 import os
+import glob
 
 # TODO: Old python strikes again! No enums for us in Python 2.6.6 ...
 QUICKSTART = 'quickstart'
@@ -42,7 +43,10 @@ mr_examples_jar = environment_dependent(
     quickstart='/usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar',
 )
 spark_examples_jar = environment_dependent(
-    quickstart='/usr/lib/spark/lib/spark-examples-*'
+    quickstart= glob.glob("/usr/lib/spark/lib/spark-examples-*.jar")[0]
+)
+oozie_host = environment_dependent(
+    quickstart = 'localhost 9090'
 )
 
 
