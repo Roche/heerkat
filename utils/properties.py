@@ -41,6 +41,14 @@ def environment_dependent(quickstart):
 mr_examples_jar = environment_dependent(
     quickstart='/usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar',
 )
+spark_examples_jar = environment_dependent(
+    quickstart='/usr/lib/spark/lib/spark-examples-*'
+)
+
+
+
+spark_properties = '--num-executors 3 --driver-memory 512m --executor-memory 512m --executor-cores 1 --master yarn-client'
+
 
 # return codes
 assertion_success_code = 0
