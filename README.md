@@ -30,7 +30,7 @@ To test the Oozie workflow the node from which you run the test needs to be whit
 
 - Go into Oozie configuration and edit "Oozie Server Advanced Configuration Snippet (Safty Valve) for oozie-site.xml". For Cloudera Quickstart paste in: 
 
-"""
+```
 <property>
 <name>oozie.service.HadoopAccessorService.nameNode.whitelist</name>
 <value/>
@@ -44,10 +44,10 @@ To test the Oozie workflow the node from which you run the test needs to be whit
 Whitelisted job tracker for Oozie service.
 </description>
 </property>
-"""
+```
 - Go into hdfs configuation and edit "Cluster-wide Advanced Configuration Snippet (Safety Valve) for core-site.xml". For Cloudera Quickstart pase in:
 
-"""
+```
 <property> 
 <name>hadoop.proxyuser.oozie.hosts</name> 
 <value>*</value> 
@@ -56,7 +56,7 @@ Whitelisted job tracker for Oozie service.
 <name>hadoop.proxyuser.oozie.groups</name> 
 <value>*</value> 
 </property>
-"""
+```
 
 # Features
 
