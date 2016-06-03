@@ -4,7 +4,7 @@ Hadoop Cluster Monitoring Bundle helps to diagnose the state of services in a Ha
 
 Heerkat is available under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
-Requirements: 	
+## General Requirements: 	
 
 - create a 'log' directory in the root folder to store the log files (the output paths for the tests can be set in `run.sh` - variables `DETAILED_LOG` and `MONITORED_LOG`)
 - set an environment variable to indicate that the Cloudera QuickStart installation is used: `export EXECUTION_ENV=quickstart`
@@ -15,14 +15,53 @@ Availability monitoring is performed with custom scripts written in Python. Pyth
  
 ### Running tests
 
-This code should work with the Cloudera QuickStart installation without any modifications. To run the test simply execute:
+This code should work with the Cloudera QuickStart. To run the test simply execute:
 
     ./run.sh availability.service_tests
 
-This test will run:
+### Requirements
+
+Most of the test will work out of the box on Cloudera Quickstart installation. Below you will find instructions if any test needs configuration adjustment.
+
+
+### Oozie workflow test requirements
+
+To test the Oozie workflow the node from which you run the test needs to be whitelisted  in Cloudera Manager. 
+
+- Go into Oozie configuration and edit "Oozie Server Adbacned Configuration Snippet (Safty Valve) for oozie-site.xml". For Cloudera Quickstart paste in: 
+ 
+<property>
+<name>oozie.service.HadoopAccessorService.nameNode.whitelist</name>
+<value/>
+<description/>
+</property>
+
+<property>
+<name>oozie.service.HadoopAccessorService.jobTracker.whitelist</name>
+<value/>
+<description>
+Whitelisted job tracker for Oozie service.
+</description>
+</property>
+
+- Go into hdfs configuation and edit "Cluster-wide Advanced Configuration Snippet (Safety Valve) for core-site.xml". For Cloudera Quickstart pase in:
+
+<property> 
+<name>hadoop.proxyuser.oozie.hosts</name> 
+<value>*</value> 
+</property> 
+<property> 
+<name>hadoop.proxyuser.oozie.groups</name> 
+<value>*</value> 
+</property>
+
+
+# Features
+
+This bundle will run the following tests:
  - a simple Pi estimator MR job from Hadoop examples, using 5 mappers and 5 reducers.
- - test hdfs file operations (copy to hdfs, read from hdfs)
- - test spark application execution
- - test pig application execution
- - test oozie workflow
- - test
+ - hdfs file operations (copy to hdfs, read from hdfs)
+ - spark application execution
+ - pig application execution
+ - oozie workflow
+
