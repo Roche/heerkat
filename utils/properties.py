@@ -46,7 +46,7 @@ spark_examples_jar = environment_dependent(
     quickstart= glob.glob("/usr/lib/spark/lib/spark-examples-*.jar")[0]
 )
 oozie_host = environment_dependent(
-    quickstart = 'localhost:11000/oozie'
+    quickstart = 'http://quickstart.cloudera:11000/oozie'
 )
 
 
