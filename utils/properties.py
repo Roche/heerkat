@@ -19,6 +19,7 @@
 
 import time
 import os
+import glob
 
 # TODO: Old python strikes again! No enums for us in Python 2.6.6 ...
 QUICKSTART = 'quickstart'
@@ -41,8 +42,22 @@ def environment_dependent(quickstart):
 mr_examples_jar = environment_dependent(
     quickstart='/usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar',
 )
+spark_examples_jar = environment_dependent(
+    quickstart= glob.glob("/usr/lib/spark/lib/spark-examples-*.jar")[0]
+)
+oozie_host = environment_dependent(
+    quickstart = 'http://quickstart.cloudera:11000/oozie'
+)
+
+
+
+spark_properties = '--num-executors 3 --driver-memory 512m --executor-memory 512m --executor-cores 1 --master yarn-client'
+
 
 # return codes
 assertion_success_code = 0
 assertion_failure_code = 1
 timeout_expired_code = 2
+
+sample_data = 'resources/sample_data'
+destination_path = '/tmp/cluster_monitoring/%s' % time.time()
