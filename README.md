@@ -21,7 +21,7 @@ This code should work with the Cloudera QuickStart. To run the test simply execu
     
 ### Skipping a test 
 
-There is a decorator @skip(for_env=None, message='') that can be used to disable test or tests for a given environment.  
+There is a decorator @skip(for_env=None, message=' ') that can be used to disable test or tests for a given environment.  
 
 ### Requirements
 
