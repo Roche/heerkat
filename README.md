@@ -18,6 +18,10 @@ Availability monitoring is performed with custom scripts written in Python. Pyth
 This code should work with the Cloudera QuickStart. To run the test simply execute:
 
     ./run.sh availability.service_tests
+    
+### Skipping a test 
+
+There is a decorator @skip(for_env=None, message='') that can be used to disable test or tests for a given environment.  
 
 ### Requirements
 
@@ -66,4 +70,5 @@ This bundle will run the following tests:
  - spark application execution
  - pig application execution
  - oozie workflow
+ 
 
