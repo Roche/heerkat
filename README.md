@@ -61,9 +61,13 @@ Whitelisted job tracker for Oozie service.
 <value>*</value> 
 </property>
 ```
-###Hbase test requirements (skipped by default)
+###Hbase test requirements (skipped by default)* work in progress
 
-Need to have proper libraries, need to have database created and user access
+Need to have proper libraries, need to have database created and user access. 
+
+
+###Create datasets for tests (Hbase, Hive/Impala, Solr)
+Need to set chmod +x on create_datasets.sh
 
 
 
