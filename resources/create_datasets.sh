@@ -11,4 +11,4 @@
 
 
 #Hbase
-hbase shell -n resources/hbase/create_table
+hbase shell -n hbase/create_table
