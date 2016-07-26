@@ -21,7 +21,7 @@ This code should work with the Cloudera QuickStart. To run the test simply execu
     
 ### Skipping a test 
 
-There is a decorator @skip(for_env=None, message=' ') that can be used to disable test or tests for a given environment.  
+There is a decorator @skip(for_env=None, message=' ') that can be used to disable test or tests for a given environment. By default all tests that require additional data or user creation are skipped! 
 
 ### Requirements
 
@@ -61,6 +61,11 @@ Whitelisted job tracker for Oozie service.
 <value>*</value> 
 </property>
 ```
+###Hbase test requirements (skipped by default)
+
+Need to have proper libraries, need to have database created and user access
+
+
 
 # Features
 
@@ -71,4 +76,20 @@ This bundle will run the following tests:
  - pig application execution
  - oozie workflow
  
+ 
+Script to deploy test datasets and create users for other services: 
 
+ - hive/impala database
+ - hbase database 
+ - solr index 
+ 
+
+ 
+ # To do / Ideas 
+ 
+ - parcels or packages??
+ - Spark History Server can be down but Spark test will pass as the job completes 
+ - sqoop / flume tests
+ - gathering statistics 
+ - anomalies (long running spark jobs: local/yarn) 
+ - hbase libraries location autodetection?
