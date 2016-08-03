@@ -38,7 +38,7 @@ def environment_dependent(quickstart):
         return quickstart
 
 
-# TODO: avoid hardcoding CDH version. For Cloudera QuickStart there is one path. For all parcel based installations, we need to think how to address this issue.
+#Map Reduce
 mr_examples_jar = environment_dependent(
     quickstart='/usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar',
 )
@@ -52,6 +52,25 @@ oozie_host = environment_dependent(
 
 
 spark_properties = '--num-executors 3 --driver-memory 512m --executor-memory 512m --executor-cores 1 --master yarn-client'
+
+
+#Spark
+spark_examples_jar = environment_dependent(
+    quickstart= glob.glob("/usr/lib/spark/lib/spark-examples-*.jar")[0],
+)
+spark_properties = '--num-executors 3 --driver-memory 512m --executor-memory 512m --executor-cores 1 --master yarn-client'
+
+#Oozie
+oozie_host = environment_dependent(
+    quickstart = 'http://quickstart.cloudera:11000/oozie',
+)
+
+#Hbase (please check if the following is true for your environment)
+hbase_thrift_classpath = '/usr/lib/hbase/lib/libthrift-0.9.0.jar:/usr/lib/hbase/hbase-thrift.jar:/usr/lib/hbase/lib/slf4j-api-1.7.5.jar:/usr/lib/hbase/lib/httpcore-4.2.5.jar:/usr/lib/hbase/hbase-client.jar'
+#hbase_query_script = 'resources/hbase/query'
+hbase_thrift_server = environment_dependent(
+  quickstart='http://quicstart.cloudera 9090',
+)
 
 
 # return codes
