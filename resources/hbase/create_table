@@ -1,0 +1,4 @@
+create 'availability_test', 'cols'
+put 'availability_test', '1', 'cols:a', 'val_a'
+put 'availability_test', '1', 'cols:b', 'val_b'
+exit
