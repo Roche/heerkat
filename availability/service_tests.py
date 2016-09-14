@@ -109,3 +109,10 @@ class ServiceTest(unittest.TestCase):
         # than
         status = re.search('Status\s+:\s+(.+)', result.stdout).group(1)
         self.assertEqual('SUCCEEDED', status, result.stderr)
+
+    def test_hbase_querying(self):
+        # when
+        result = cmd('hbase shell -n %s' % hbase_query_script)
+
+        # than
+        self.assertEqual(0, result.exit_code, result.stderr)

@@ -71,6 +71,7 @@ hbase_thrift_classpath = '/usr/lib/hbase/lib/libthrift-0.9.0.jar:/usr/lib/hbase/
 hbase_thrift_server = environment_dependent(
   quickstart='http://quicstart.cloudera 9090',
 )
+hbase_query_script = 'resources/hbase/query_table'
 
 
 # return codes
