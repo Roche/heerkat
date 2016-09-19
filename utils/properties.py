@@ -74,6 +74,16 @@ hbase_thrift_server = environment_dependent(
 hbase_query_script = 'resources/hbase/query_table'
 
 
+#Hive settings
+connection_string_hive = environment_dependent(
+  quickstart='jdbc:hive2://quickstart.cloudera:10000',
+)
+#Impala settings
+connection_string_impala = environment_dependent(
+  quickstart='jdbc:hive2://quickstart.cloudera:10000',
+)
+
+
 # return codes
 assertion_success_code = 0
 assertion_failure_code = 1

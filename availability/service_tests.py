@@ -110,9 +110,32 @@ class ServiceTest(unittest.TestCase):
         status = re.search('Status\s+:\s+(.+)', result.stdout).group(1)
         self.assertEqual('SUCCEEDED', status, result.stderr)
 
+    @skip(for_env='quickstart', message="Disabled by default. Plese setup all prerequisites")
+    @timeout(60)
+    @report('hbase', 'query-table')
     def test_hbase_querying(self):
         # when
         result = cmd('hbase shell -n %s' % hbase_query_script)
+
+        # than
+        self.assertEqual(0, result.exit_code, result.stderr)
+
+    @skip(for_env='quickstart', message="Disabled by default. Please setup all prerequisites")
+    @timeout(60)
+    @report('hive', 'select-form-lifecycle_availability_test')
+    def test_hive_querying(self):
+        # when
+        result = cmd('beeline -u "%s" -e "select * from availability_test.sample_data"' % connection_string_hive)
+
+        # than
+        self.assertEqual(0, result.exit_code, result.stderr)
+
+    @skip(for_env="quickstart", message="Disabled by default. Please setup all prerequisites")
+    @timeout(60)
+    @report('impala', 'select-lifecycle.availability_test')
+    def test_impala_querying(self):
+        # when
+        result = cmd('beeline -u "%s" -e "select * from availability_test.sample_data"' % connection_string_impala)
 
         # than
         self.assertEqual(0, result.exit_code, result.stderr)

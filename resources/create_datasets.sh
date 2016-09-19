@@ -28,3 +28,13 @@
 
 #Hbase
 hbase shell -n hbase/create_table
+
+#Hive/Impala
+hadoop fs -put sample_data /user/cloudera
+hadoop fs -chmod -R 777 /user/cloudera
+export HIVE="jdbc:hive2://localhost:10000"
+beeline -u ${HIVE} -e "create database availability_test"
+beeline -u ${HIVE} -e "create table availability_test.sample_data (line string)"
+beeline -u ${HIVE} -e "LOAD DATA INPATH '/user/cloudera/sample_data' INTO TABLE availability_test.sample_data"
+
+
