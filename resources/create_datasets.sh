@@ -38,3 +38,8 @@ beeline -u ${HIVE} -e "create table availability_test.sample_data (line string)"
 beeline -u ${HIVE} -e "LOAD DATA INPATH '/user/cloudera/sample_data' INTO TABLE availability_test.sample_data"
 
 
+#Solr
+solrctl instancedir --generate solr/availability_test
+solrctl instancedir --create availability_test solr/availability_test
+solrctl collection --create availability_test -s 1
+curl http://localhost:8983/solr/availability_test/update --data-binary @solr/data -H "Content-type: application/csv;charset=utf-8"

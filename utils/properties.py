@@ -42,17 +42,6 @@ def environment_dependent(quickstart):
 mr_examples_jar = environment_dependent(
     quickstart='/usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar',
 )
-spark_examples_jar = environment_dependent(
-    quickstart= glob.glob("/usr/lib/spark/lib/spark-examples-*.jar")[0]
-)
-oozie_host = environment_dependent(
-    quickstart = 'http://quickstart.cloudera:11000/oozie'
-)
-
-
-
-spark_properties = '--num-executors 3 --driver-memory 512m --executor-memory 512m --executor-cores 1 --master yarn-client'
-
 
 #Spark
 spark_examples_jar = environment_dependent(
@@ -73,14 +62,19 @@ hbase_thrift_server = environment_dependent(
 )
 hbase_query_script = 'resources/hbase/query_table'
 
-
 #Hive settings
 connection_string_hive = environment_dependent(
   quickstart='jdbc:hive2://quickstart.cloudera:10000',
 )
+
 #Impala settings
 connection_string_impala = environment_dependent(
   quickstart='jdbc:hive2://quickstart.cloudera:10000',
+)
+
+#Solr
+solr_instance = environment_dependent(
+    quickstart='quickstart.cloudera:8983'
 )
 
 

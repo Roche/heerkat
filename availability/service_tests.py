@@ -139,3 +139,13 @@ class ServiceTest(unittest.TestCase):
 
         # than
         self.assertEqual(0, result.exit_code, result.stderr)
+
+    @skip(for_env="quickstart", message="Disabled by default. Please setup all prerequisites")
+    @timeout(60)
+    @report('solr', 'select-availability_test')
+    def test_solr_querying(self):
+        # when
+        result = cmd('curl --negotiate -u: "http://%s/solr/availability_test/select?q=*:*"' % solr_instance)
+
+        # than
+        self.assertTrue('<int name="status">0</int>' in result.stdout, result.stderr)
