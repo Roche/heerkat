@@ -84,7 +84,7 @@ hue_login='cloudera'
 hue_password='cloudera'
 hue_cookies_file='hue_cookies'
 hue_url = environment_dependent(
-  quickstart='http://quickstart.cloudera/',
+  quickstart='http://quickstart.cloudera:8888',
 
 )
 
