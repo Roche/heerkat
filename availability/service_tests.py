@@ -149,3 +149,28 @@ class ServiceTest(unittest.TestCase):
 
         # than
         self.assertTrue('<int name="status">0</int>' in result.stdout, result.stderr)
+
+
+    @timeout(60)
+    @report('hue', 'hue-login-availability_test')
+    def test_hue_login(self):
+        # given
+        self.get_hue_cookies(hue_cookies_file)
+        csrftoken = self.get_csrftoken(hue_cookies_file)
+
+        # when
+        result = cmd('curl --data "username=%s&password=%s&next=/home&csrfmiddlewaretoken=%s" -b %s -Lkv %saccounts/login/' % (hue_login, hue_password, csrftoken, hue_cookies_file, hue_url))
+
+        # than
+        self.assertEqual(0, result.exit_code, result.stderr)
+        self.assertTrue('HTTP/1.1 200 OK' in result.stderr, 'Login to Hue unsuccessful: %s' % result.stderr)
+
+    def get_hue_cookies(self, file_for_cookies):
+        cmd('rm -f %s' % file_for_cookies)
+        cmd('curl -c %s -Lkv %s' % (file_for_cookies, hue_url)) # gets and saves session cookies
+
+    def get_csrftoken(self, cookies_file):
+        with open(cookies_file, 'r') as cookies:
+            csrftoken_line = filter(lambda line: "csrftoken" in line, cookies)[0]
+            csrftoken = csrftoken_line.split('\t')[6]
+        return csrftoken.strip()

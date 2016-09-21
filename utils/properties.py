@@ -77,6 +77,19 @@ solr_instance = environment_dependent(
     quickstart='quickstart.cloudera:8983'
 )
 
+#HUE
+hue_login='cloudera'
+# following property is overridden during bamboo deployment,
+# if you need to change this property, please change deployment plan as well
+hue_password='cloudera'
+hue_cookies_file='hue_cookies'
+hue_url = environment_dependent(
+  quickstart='http://quickstart.cloudera/',
+
+)
+
+
+
 
 # return codes
 assertion_success_code = 0
