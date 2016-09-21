@@ -84,12 +84,14 @@ hue_login='cloudera'
 hue_password='cloudera'
 hue_cookies_file='hue_cookies'
 hue_url = environment_dependent(
-  quickstart='http://quickstart.cloudera:8888',
+  quickstart='http://quickstart.cloudera:8888/',
 
 )
 
-
-
+#Zookeeper
+zookeeper_hosts = environment_dependent(
+  quickstart=['quickstart.cloudera'],
+)
 
 # return codes
 assertion_success_code = 0
