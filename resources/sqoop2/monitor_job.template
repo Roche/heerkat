@@ -1,0 +1,5 @@
+#Set server
+set server --host hostname --port 12000 --webapp sqoop
+
+#Get status of the job
+status job -jid jobid

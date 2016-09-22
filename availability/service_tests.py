@@ -184,3 +184,27 @@ class ServiceTest(unittest.TestCase):
 
             # expect
             self.assertEqual(0, result.exit_code, "Zookeeper connectivity test failed for %s " % zookeeper_host)
+
+    @skip(for_env="quickstart", message='Disabled by default. Please setup all prerequisites')
+    @timeout(300)
+    @report('sqoop2', 'sqoop2-test-job')
+    def test_sqoop2(self):
+
+        env_variables = {'hostname':sqoop2_host, 'jobid':sqoop2_jid}
+
+        #set environment variables into sqoop script files
+        replace_text('./resources/sqoop2/start_job.template', './resources/sqoop2/start_job.sqoop', env_variables)
+        replace_text('./resources/sqoop2/monitor_job.template', './resources/sqoop2/monitor_job.sqoop', env_variables)
+
+        #output dir on hdfs to which test job writes to
+        output_data_dir = 'test/availability/sqoop2'
+
+        #recreate directory and set permissions for sqoop2 user on hdfs
+        cmd('hdfs dfs -rm -r %s' % output_data_dir)
+        cmd('hdfs dfs -mkdir -p %s' % output_data_dir)
+        cmd('hdfs dfs -setfacl -m group:sqoop2:rwx %s' % output_data_dir)
+
+        #run, monitor and check the sqoop2 job
+        cmd('sqoop2 ./resources/sqoop2/start_job.sqoop')
+        check = cmd_test('sqoop2 ./resources/sqoop2/monitor_job.sqoop', 5, 10, 'Job executed successfully')
+        self.assertTrue(check[0], 'Sqoop2 test job failed to execute successfully: ' + check[1])

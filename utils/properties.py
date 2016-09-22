@@ -93,6 +93,14 @@ zookeeper_hosts = environment_dependent(
   quickstart=['quickstart.cloudera'],
 )
 
+#Sqoop
+sqoop2_host = environment_dependent(
+  quickstart = "localhost",
+)
+sqoop2_jid = environment_dependent(
+  quickstart = "",
+)
+
 # return codes
 assertion_success_code = 0
 assertion_failure_code = 1
