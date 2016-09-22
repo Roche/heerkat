@@ -180,7 +180,7 @@ class ServiceTest(unittest.TestCase):
     def test_zookeeper_connectivity(self):
         for zookeeper_host in zookeeper_hosts:
             # when
-            result = cmd(' /opt/cloudera/parcels/CDH/bin/zookeeper-client -server %s ls /' % zookeeper_host)
+            result = cmd('zookeeper-client -server %s ls /' % zookeeper_host)
 
             # expect
             self.assertEqual(0, result.exit_code, "Zookeeper connectivity test failed for %s " % zookeeper_host)
