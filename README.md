@@ -85,7 +85,7 @@ Need to set chmod +x on resources/create_datasets.sh
 
 ## Features
 
-This bundle will run the following tests:
+###This bundle will run the following tests:
  - a simple Pi estimator MR job from Hadoop examples, using 5 mappers and 5 reducers.
  - hdfs file operations (copy to hdfs, read from hdfs)
  - spark application execution
@@ -99,14 +99,13 @@ This bundle will run the following tests:
  - sqoop2 import (disabled by default)
  
  
-Script to deploy test datasets for:
+###Script to deploy test datasets for:
 
  - hive/impala database
  - hbase database 
  - solr index 
  
- 
- # To do / Ideas 
+###To do / Ideas 
  
  - parcels or packages??
  - Spark History Server can be down but Spark test will pass as the job completes 
