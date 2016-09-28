@@ -4,6 +4,7 @@ Hadoop Cluster Monitoring Bundle helps to diagnose the state of services in a Ha
 
 Heerkat is available under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
+
 ## General Requirements: 	
 
 - create a `log` directory in the root folder to store the log files (the output paths for the tests can be set in `run.sh` - variables `DETAILED_LOG` and `MONITORED_LOG`)
@@ -13,17 +14,17 @@ Heerkat is available under the [Apache License 2.0](http://www.apache.org/licens
 
 Availability monitoring is performed with custom scripts written in Python. Python code periodically (needs to be setup in Cron or other scheduler) executes the checks for chosen Hadoop components and logs predefined 'failure line' to a file. This file can be monitored by the end-users or with a preferred monitoring system, e.g. NetIQ App Manager.
  
-### Running tests
+## Running tests
 
 This code should work with the Cloudera QuickStart. To run the test simply execute:
 
     ./run.sh availability.service_tests
 
-### Skipping a test 
+## Skipping a test 
 
 There is a decorator @skip(for_env=None, message=' ') that can be used to disable test or tests for a given environment. By default all tests that require additional data or user creation are skipped! 
 
-### Requirements
+## Requirements
 
 Most of the test will work out of the box on Cloudera Quickstart installation. Below you will find instructions if any test needs configuration adjustment.
 
@@ -61,39 +62,54 @@ Whitelisted job tracker for Oozie service.
 <value>*</value> 
 </property>
 ```
-###Hbase test requirements (skipped by default)* work in progress
+###Hbase test requirements (skipped by default)* 
 
-Need to have proper libraries, need to have database created and user access. 
+Needs to have proper libraries (please look into proper section of properties.py file), needs to have database created and user access. (for Cloudera Quickstart you can use resources/create_datasets.sh) 
+
+###Impala/Hive test requirements (skipped by default)*
+
+Needs to have proper libraries (please look into proper section of properties.py file), needs to have database created and user access. (for Cloudera Quickstart you can use resources/create_datasets.sh)  
+
+###Solr test requirements (skipped by default)*
+
+Needs to have proper libraries (please look into proper section of properties.py file), needs to have collection created and user access. (for Cloudera Quickstart you can use resources/create_datasets.sh) 
+
+###Sqoop2 test requirements (skipped by default)*
+
+Sqoop2 job need to exist in sqoop, and setup with proper connectors. The test is designed to take existing jobid and run it, testing for correct output.  
+You need to make sure that the user has access to the "output_data_dir" on hdfs. 
+
+###Create datasets for tests (Hbase, Hive/Impala, Solr,)
+Need to set chmod +x on resources/create_datasets.sh
 
 
-###Create datasets for tests (Hbase, Hive/Impala, Solr)
-Need to set chmod +x on create_datasets.sh
+## Features
 
-
-
-# Features
-
-This bundle will run the following tests:
+###This bundle will run the following tests:
  - a simple Pi estimator MR job from Hadoop examples, using 5 mappers and 5 reducers.
  - hdfs file operations (copy to hdfs, read from hdfs)
  - spark application execution
  - pig application execution
  - oozie workflow
+ - hue login 
+ - zookeeper connectivity
+ - hive query (disabled by default)
+ - hbase query (disabled by default)
+ - solr query (disabled by default)
+ - sqoop2 import (disabled by default)
  
  
-Script to deploy test datasets and create users for other services: 
+###Script to deploy test datasets for:
 
  - hive/impala database
  - hbase database 
  - solr index 
  
-
- 
- # To do / Ideas 
+###To do / Ideas 
  
  - parcels or packages??
  - Spark History Server can be down but Spark test will pass as the job completes 
- - sqoop / flume tests
+ - flume tests
  - gathering statistics 
  - anomalies (long running spark jobs: local/yarn) 
  - hbase libraries location autodetection?

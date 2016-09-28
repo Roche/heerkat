@@ -109,3 +109,102 @@ class ServiceTest(unittest.TestCase):
         # than
         status = re.search('Status\s+:\s+(.+)', result.stdout).group(1)
         self.assertEqual('SUCCEEDED', status, result.stderr)
+
+    @skip(for_env='quickstart', message="Disabled by default. Plese setup all prerequisites")
+    @timeout(60)
+    @report('hbase', 'query-table')
+    def test_hbase_querying(self):
+        # when
+        result = cmd('hbase shell -n %s' % hbase_query_script)
+
+        # than
+        self.assertEqual(0, result.exit_code, result.stderr)
+
+    @skip(for_env='quickstart', message="Disabled by default. Please setup all prerequisites")
+    @timeout(60)
+    @report('hive', 'select-form-lifecycle_availability_test')
+    def test_hive_querying(self):
+        # when
+        result = cmd('beeline -u "%s" -e "select * from availability_test.sample_data"' % connection_string_hive)
+
+        # than
+        self.assertEqual(0, result.exit_code, result.stderr)
+
+    @skip(for_env="quickstart", message="Disabled by default. Please setup all prerequisites")
+    @timeout(60)
+    @report('impala', 'select-lifecycle.availability_test')
+    def test_impala_querying(self):
+        # when
+        result = cmd('beeline -u "%s" -e "select * from availability_test.sample_data"' % connection_string_impala)
+
+        # than
+        self.assertEqual(0, result.exit_code, result.stderr)
+
+    @skip(for_env="quickstart", message="Disabled by default. Please setup all prerequisites")
+    @timeout(60)
+    @report('solr', 'select-availability_test')
+    def test_solr_querying(self):
+        # when
+        result = cmd('curl --negotiate -u: "http://%s/solr/availability_test/select?q=*:*"' % solr_instance)
+
+        # than
+        self.assertTrue('<int name="status">0</int>' in result.stdout, result.stderr)
+
+
+    @timeout(60)
+    @report('hue', 'hue-login-availability_test')
+    def test_hue_login(self):
+        # given
+        self.get_hue_cookies(hue_cookies_file)
+        csrftoken = self.get_csrftoken(hue_cookies_file)
+
+        # when
+        result = cmd('curl --data "username=%s&password=%s&next=/home&csrfmiddlewaretoken=%s" -b %s -Lkv %saccounts/login/' % (hue_login, hue_password, csrftoken, hue_cookies_file, hue_url))
+
+        # than
+        self.assertEqual(0, result.exit_code, result.stderr)
+        self.assertTrue('HTTP/1.1 200 OK' in result.stderr, 'Login to Hue unsuccessful: %s' % result.stderr)
+
+    def get_hue_cookies(self, file_for_cookies):
+        cmd('rm -f %s' % file_for_cookies)
+        cmd('curl -c %s -Lkv %s' % (file_for_cookies, hue_url)) # gets and saves session cookies
+
+    def get_csrftoken(self, cookies_file):
+        with open(cookies_file, 'r') as cookies:
+            csrftoken_line = filter(lambda line: "csrftoken" in line, cookies)[0]
+            csrftoken = csrftoken_line.split('\t')[6]
+        return csrftoken.strip()
+
+    @timeout(120)
+    @report('zookeeper', 'zookeeper-connectivity-test')
+    def test_zookeeper_connectivity(self):
+        for zookeeper_host in zookeeper_hosts:
+            # when
+            result = cmd('zookeeper-client -server %s ls /' % zookeeper_host)
+
+            # expect
+            self.assertEqual(0, result.exit_code, "Zookeeper connectivity test failed for %s " % zookeeper_host)
+
+    @skip(for_env="quickstart", message='Disabled by default. Please setup all prerequisites')
+    @timeout(300)
+    @report('sqoop2', 'sqoop2-test-job')
+    def test_sqoop2(self):
+
+        env_variables = {'hostname':sqoop2_host, 'jobid':sqoop2_jid}
+
+        #set environment variables into sqoop script files
+        replace_text('./resources/sqoop2/start_job.template', './resources/sqoop2/start_job.sqoop', env_variables)
+        replace_text('./resources/sqoop2/monitor_job.template', './resources/sqoop2/monitor_job.sqoop', env_variables)
+
+        #output dir on hdfs to which test job writes to
+        output_data_dir = 'test/availability/sqoop2'
+
+        #recreate directory and set permissions for sqoop2 user on hdfs
+        cmd('hdfs dfs -rm -r %s' % output_data_dir)
+        cmd('hdfs dfs -mkdir -p %s' % output_data_dir)
+        cmd('hdfs dfs -setfacl -m group:sqoop2:rwx %s' % output_data_dir)
+
+        #run, monitor and check the sqoop2 job
+        cmd('sqoop2 ./resources/sqoop2/start_job.sqoop')
+        check = cmd_test('sqoop2 ./resources/sqoop2/monitor_job.sqoop', 5, 10, 'Job executed successfully')
+        self.assertTrue(check[0], 'Sqoop2 test job failed to execute successfully: ' + check[1])
