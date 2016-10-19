@@ -58,7 +58,7 @@ oozie_host = environment_dependent(
 hbase_thrift_classpath = '/usr/lib/hbase/lib/libthrift-0.9.0.jar:/usr/lib/hbase/hbase-thrift.jar:/usr/lib/hbase/lib/slf4j-api-1.7.5.jar:/usr/lib/hbase/lib/httpcore-4.2.5.jar:/usr/lib/hbase/hbase-client.jar'
 #hbase_query_script = 'resources/hbase/query'
 hbase_thrift_server = environment_dependent(
-  quickstart='http://quicstart.cloudera 9090',
+  quickstart='http://quickstart.cloudera 9090',
 )
 hbase_query_script = 'resources/hbase/query_table'
 
