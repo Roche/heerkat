@@ -1,4 +1,5 @@
-# Heerkat - Hadoop Cluster Monitoring Bundle 
+<h2>Repository was migrated to internal bitbucket. To get access please contact with Roche DevTools Support</h2>
+#Heerkat - Hadoop Cluster Monitoring Bundle 
 
 Hadoop Cluster Monitoring Bundle helps to diagnose the state of services in a Hadoop cluster. We made it work with the Cloudera QuickStart VM, so you can evaluate it easily. However, it was designed to work with production clusters and this is how it is utilized by us.
 
